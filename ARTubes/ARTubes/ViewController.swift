@@ -13,7 +13,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet weak var Tubes: UIButton!
     
-    @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet var sceneView: ARSCNView!
     
     @IBAction func Tubes(_ sender: Any) {
         let alertController = UIAlertController(title: "Change the tube", message: "The new selected tube will be selected able to place on the surface", preferredStyle: .actionSheet)
@@ -43,7 +43,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // Create a new scene
         // let scene = SCNScene(named: "art.scnassets/"+current_tubemodel+".dae")!
-        // SCNScene *scene = [SCNScene scenenamed:@'art.scnassets/']
+        // let scene = SCNScene(named: "3DModel/ship.scn")!
+//        SCNScene *scene = [SCNScene scenenamed:@'3DModel/']
 
         // Set the scene to the view
         // sceneView.scene = scene
@@ -51,7 +52,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func renderer (_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor){
         let meshNode : SCNNode
-//        let textNode : SCNNode
+        let textNode : SCNNode
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         guard let meshGeometry = ARSCNPlaneGeometry(device: sceneView.device!)
         else {
@@ -68,18 +69,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         node.addChildNode(meshNode)
         
-//        let textGeometry = SCNText(string: "Plane", extrusionDepth: 1)
-//        textGeometry.font = UIFont(name: "Futura", size: 75)
+        let textGeometry = SCNText(string: "Plane", extrusionDepth: 1)
+        textGeometry.font = UIFont(name: "Futura", size: 75)
         
-//        textNode = SCNNode(geometry: textGeometry)
-//        textNode.name = "TextNode"
-//
-//        textNode.simdScale = SIMD3(repeating: 0.0005)
-//        textNode.eulerAngles = SCNVector3(x: Float(-90.degreesToradians), y: 0, z: 0)
-//
-//        node.addChildNode(textNode)
-//        textNode.centerAlign()
-//        print("did add plane node")
+        textNode = SCNNode(geometry: textGeometry)
+        textNode.name = "TextNode"
+
+        textNode.simdScale = SIMD3(repeating: 0.0005)
+        textNode.eulerAngles = SCNVector3(x: Float(-90.degreesToradians), y: 0, z: 0)
+
+        node.addChildNode(textNode)
+        textNode.centerAlign()
+        print("did add plane node")
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
@@ -100,6 +101,32 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Run the view's session
         sceneView.session.run(configuration)
+    }
+    
+    func addGestures(){
+        let tapped = UITapGestureRecognizer(target: self, action: #selector(tapGesture))
+        sceneView.addGestureRecognizer(tapped)
+    }
+    
+    @objc func tapGesture (sender: UITapGestureRecognizer){
+        let location = sender.location(in: sceneView)
+        let hitTest = sceneView.hitTest(location, types: .existingPlaneUsingExtent)
+        if hitTest.isEmpty{
+            print("No Plane Detected")
+            return
+        }
+        else{
+            let scene = SCNScene(named: "3DModel/ship.scn")!
+            let node = scene.rootNode.childNode(withName: "ship", recursively: false)
+            let columns = hitTest.first?.worldTransform.columns.3
+            node!.position = SCNVector3(x: columns!.x,y: columns!.y, z: columns!.z )
+            sceneView.scene.rootNode.addChildNode(node!)
+            sceneView.scene.rootNode.enumerateChildNodes{ (child, _) in
+                if child.name == "MeshNode" || child.name == "TextNode"{
+                    child.removeFromParentNode()
+                }
+            }
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
