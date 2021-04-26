@@ -7,7 +7,7 @@ import UIKit
 import ARKit
 import SwiftUI
 
-var current_tubemodel = "tube3"
+var current_tubemodel = "none"
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
@@ -76,9 +76,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func loadGeometry(_ result: ARRaycastResult) {
-//        guard let scene = SCNScene(named: "art.scnassets/tube3.dae") else { print("Cannot load SCNScene") ; return }
-//        let node: SCNNode? = scene.rootNode.childNode(withName: "LayerFBXASC0580", recursively: true)
-        guard let scene = SCNScene(named: "art.scnassets/tube3.scn") else { print("Cannot load SCNScene") ; return }
+        if (current_tubemodel == "none"){
+            let alertView = UIAlertView(title: "Alert", message: "Please choose a tube to place first", delegate: self, cancelButtonTitle: "OK")
+            alertView.show()
+        }
+        guard let scene = SCNScene(named: "art.scnassets/"+current_tubemodel+".scn") else { print("Cannot load SCNScene") ; return }
         let node: SCNNode? = scene.rootNode.childNode(withName: "LayerFBXASC0580", recursively: true)
         node?.position = SCNVector3(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y, result.worldTransform.columns.3.z)
         self.sceneView.scene.rootNode.addChildNode(node!)
