@@ -13,11 +13,16 @@ var display_type = false
 var display_diameter = false
 var display_coordinate = false
 
+var colist = [SCNVector3]()
+var namelist = [String]()
+var typelist = [String]()
+var dlist = [Float]()
+
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet weak var Tubes: UIButton!
-    
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var infolabel: UILabel!
     
     let configuration = ARWorldTrackingConfiguration()
     
@@ -66,6 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             popoverController.permittedArrowDirections = []
         }
         self.present(alertController, animated: true, completion: nil)
+        updatetext()
     }
     
     override func viewDidLoad() {
@@ -80,7 +86,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
@@ -110,6 +115,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     @IBAction func Reset(_ sender: Any) {
         sceneView.session.pause()
+        colist.removeAll()
+        namelist.removeAll()
+        typelist.removeAll()
+        dlist.removeAll()
+        updatetext()
         sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
             node.removeFromParentNode()
         }
@@ -120,12 +130,30 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if (current_tubemodel == "none"){
             let alertView = UIAlertView(title: "Alert", message: "Please choose a tube to place first", delegate: self, cancelButtonTitle: "OK")
             alertView.show()
+            updatetext()
         }
         guard let scene = SCNScene(named: "art.scnassets/"+current_tubemodel+".scn") else { print("Cannot load SCNScene") ; return }
-        let node: SCNNode? = scene.rootNode.childNode(withName: "LayerFBXASC0580", recursively: true)
-        node?.scale = SCNVector3(0.3,0.3,0.3)
+        let node: SCNNode? = scene.rootNode.childNode(withName: "jinggai", recursively: true)
+        node?.scale = SCNVector3(0.1,0.1,0.1)
         node?.position = SCNVector3(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y, result.worldTransform.columns.3.z)
+        colist.append(SCNVector3(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y, result.worldTransform.columns.3.z))
+        if current_tubemodel == "tube1"{
+            namelist.append("tube1");
+            typelist.append("type_tube1")
+            dlist.append(0.75)
+        }
+        else if current_tubemodel == "tube2"{
+            namelist.append("tube2");
+            typelist.append("type_tube2")
+            dlist.append(0.55)
+        }
+        else{
+            namelist.append("tube3");
+            typelist.append("type_tube3")
+            dlist.append(0.35)
+        }
         self.sceneView.scene.rootNode.addChildNode(node!)
+        updatetext()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -204,7 +232,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+    }
+    
+
+    func updatetext(){
+        print("updating text")
+        if (!display_name && !display_type && !display_coordinate && !display_diameter) {
+            infolabel.text = " "
+            return
+        }
+        infolabel.text = "[TubeInfo]\n"
+        if namelist.count == 0 {
+            infolabel.text! += "No Tubes Added"
+            return
+        }
+        for index in 1...namelist.count{
+            infolabel.text! += "[Tube\(index)]\n"
+            if display_name {infolabel.text! += "Name:\(namelist[index-1])\n"}
+            if display_type {infolabel.text! += "Type:\(typelist[index-1])\n"}
+            if display_diameter {infolabel.text! += "Diameter:\(dlist[index-1])\n"}
+            if display_coordinate {infolabel.text! += "Coordinate:\(colist[index-1])\n"}
+        }
+        return
     }
 }
 
@@ -237,3 +286,4 @@ func / (left: SCNVector3, right: Int) -> SCNVector3 {
 extension Int {
     var degreesToradians : Double {return Double(self) * .pi/180}
 }
+
