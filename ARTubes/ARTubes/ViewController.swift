@@ -123,7 +123,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
             node.removeFromParentNode()
         }
-        sceneView.session.run(configuration, options : [.resetTracking, .removeExistingAnchors])
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        UIApplication.shared.isIdleTimerDisabled = true
+        self.sceneView.autoenablesDefaultLighting = true
+        // Run the view's session
+        sceneView.session.run(configuration)
+        addGestures()
     }
     
     func loadGeometry(_ result: ARRaycastResult) {
@@ -140,7 +146,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if current_tubemodel == "tube1"{
             namelist.append("tube1");
             typelist.append("type_tube1")
-            dlist.append(0.75)
+            dlist.append(0.7)
         }
         else if current_tubemodel == "tube2"{
             namelist.append("tube2");
@@ -150,7 +156,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         else{
             namelist.append("tube3");
             typelist.append("type_tube3")
-            dlist.append(0.35)
+            dlist.append(0.3)
         }
         self.sceneView.scene.rootNode.addChildNode(node!)
         updatetext()
