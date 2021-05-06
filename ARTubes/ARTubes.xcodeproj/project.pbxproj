@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3715CEDB263551280007B05E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3715CEDA263551280007B05E /* ViewController.swift */; };
-		3715CEE2263557E40007B05E /* ship.scn in Resources */ = {isa = PBXBuildFile; fileRef = 3715CEE0263557E40007B05E /* ship.scn */; };
-		3715CEE3263557E40007B05E /* ship.png in Resources */ = {isa = PBXBuildFile; fileRef = 3715CEE1263557E40007B05E /* ship.png */; };
 		375A2B7B2632584700EAB311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A2B7A2632584700EAB311 /* AppDelegate.swift */; };
 		375A2B7D2632584700EAB311 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 375A2B7C2632584700EAB311 /* art.scnassets */; };
 		375A2B822632584700EAB311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375A2B802632584700EAB311 /* Main.storyboard */; };
@@ -38,8 +36,6 @@
 
 /* Begin PBXFileReference section */
 		3715CEDA263551280007B05E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3715CEE0263557E40007B05E /* ship.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ship.scn; sourceTree = "<group>"; };
-		3715CEE1263557E40007B05E /* ship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship.png; sourceTree = "<group>"; };
 		375A2B772632584700EAB311 /* ARTubes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARTubes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		375A2B7A2632584700EAB311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		375A2B7C2632584700EAB311 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -80,15 +76,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3715CEDF263557D30007B05E /* 3DModel */ = {
-			isa = PBXGroup;
-			children = (
-				3715CEE1263557E40007B05E /* ship.png */,
-				3715CEE0263557E40007B05E /* ship.scn */,
-			);
-			path = 3DModel;
-			sourceTree = "<group>";
-		};
 		375A2B6E2632584700EAB311 = {
 			isa = PBXGroup;
 			children = (
@@ -112,7 +99,6 @@
 		375A2B792632584700EAB311 /* ARTubes */ = {
 			isa = PBXGroup;
 			children = (
-				3715CEDF263557D30007B05E /* 3DModel */,
 				375A2B7A2632584700EAB311 /* AppDelegate.swift */,
 				3715CEDA263551280007B05E /* ViewController.swift */,
 				375A2B7C2632584700EAB311 /* art.scnassets */,
@@ -245,12 +231,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3715CEE2263557E40007B05E /* ship.scn in Resources */,
 				375A2B7D2632584700EAB311 /* art.scnassets in Resources */,
 				375A2B872632584700EAB311 /* LaunchScreen.storyboard in Resources */,
 				375A2B842632584700EAB311 /* Assets.xcassets in Resources */,
 				375A2B822632584700EAB311 /* Main.storyboard in Resources */,
-				3715CEE3263557E40007B05E /* ship.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

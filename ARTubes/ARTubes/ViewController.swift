@@ -7,7 +7,7 @@ import UIKit
 import ARKit
 import SwiftUI
 
-var current_tubemodel = "none"
+//var current_tubemodel = "none"
 var display_name = false
 var display_type = false
 var display_diameter = false
@@ -26,21 +26,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     let configuration = ARWorldTrackingConfiguration()
     
-    @IBAction func Tubes(_ sender: Any) {
-        let alertController = UIAlertController(title: "Change the tube", message: "The new selected tube will be selected able to place on the surface", preferredStyle: .actionSheet)
-        for index in 1...3{
-            let tubeaction = UIAlertAction(title: "Tube"+String(index) , style: .default, handler: {_ in current_tubemodel = "tube"+String(index)})
-            alertController.addAction(tubeaction)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-        alertController.addAction(cancelAction)
-        if let popoverController = alertController.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        self.present(alertController, animated: true, completion: nil)
-    }
+//    @IBAction func Tubes(_ sender: Any) {
+//        let alertController = UIAlertController(title: "Change the tube", message: "The new selected tube will be selected able to place on the surface", preferredStyle: .actionSheet)
+//        for index in 1...3{
+//            let tubeaction = UIAlertAction(title: "Tube"+String(index) , style: .default, handler: {_ in current_tubemodel = "tube"+String(index)})
+//            alertController.addAction(tubeaction)
+//        }
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+//        alertController.addAction(cancelAction)
+//        if let popoverController = alertController.popoverPresentationController {
+//            popoverController.sourceView = self.view
+//            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+//            popoverController.permittedArrowDirections = []
+//        }
+//        self.present(alertController, animated: true, completion: nil)
+//    }
 
     @IBAction func Display(_ sender: Any) {
         let alertController = UIAlertController(title: "Display Settings", message: "Tap to change the display status", preferredStyle: .actionSheet)
@@ -133,31 +133,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func loadGeometry(_ result: ARRaycastResult) {
-        if (current_tubemodel == "none"){
-            let alertView = UIAlertView(title: "Alert", message: "Please choose a tube to place first", delegate: self, cancelButtonTitle: "OK")
-            alertView.show()
-            updatetext()
-        }
-        guard let scene = SCNScene(named: "art.scnassets/"+current_tubemodel+".scn") else { print("Cannot load SCNScene") ; return }
+        guard let scene = SCNScene(named: "art.scnassets/full_tube_model.dae") else { print("Cannot load SCNScene") ; return }
         let node: SCNNode? = scene.rootNode.childNode(withName: "jinggai", recursively: true)
         node?.scale = SCNVector3(0.1,0.1,0.1)
         node?.position = SCNVector3(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y, result.worldTransform.columns.3.z)
         colist.append(SCNVector3(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y, result.worldTransform.columns.3.z))
-        if current_tubemodel == "tube1"{
-            namelist.append("tube1");
-            typelist.append("type_tube1")
-            dlist.append(0.7)
-        }
-        else if current_tubemodel == "tube2"{
-            namelist.append("tube2");
-            typelist.append("type_tube2")
-            dlist.append(0.55)
-        }
-        else{
-            namelist.append("tube3");
-            typelist.append("type_tube3")
-            dlist.append(0.3)
-        }
+//        if current_tubemodel == "tube1"{
+//            namelist.append("tube1");
+//            typelist.append("type_tube1")
+//            dlist.append(0.7)
+//        }
+//        else if current_tubemodel == "tube2"{
+//            namelist.append("tube2");
+//            typelist.append("type_tube2")
+//            dlist.append(0.55)
+//        }
+//        else{
+//            namelist.append("tube3");
+//            typelist.append("type_tube3")
+//            dlist.append(0.3)
+//        }
+        namelist.append("tubeset_full");
+        typelist.append("tube_type_default")
+        dlist.append(0.5)
         self.sceneView.scene.rootNode.addChildNode(node!)
         updatetext()
     }
