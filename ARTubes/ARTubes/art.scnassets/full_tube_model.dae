@@ -4,8 +4,8 @@
   <contributor>
    <authoring_tool>SceneKit Collada Exporter v1.0</authoring_tool>
   </contributor>
-  <created>2021-05-06T17:30:16Z</created>
-  <modified>2021-05-06T17:30:16Z</modified>
+  <created>2021-05-07T12:25:54Z</created>
+  <modified>2021-05-07T12:25:54Z</modified>
   <unit meter="0.025400"/>
   <up_axis>Y_UP</up_axis>
  </asset>
@@ -94,10 +94,10 @@
  </library_geometries>
  <library_visual_scenes>
   <visual_scene id="scene6">
-   <node id="jinggai" name="jinggai">
-    <matrix>1 -0 0 74.11871 0 3.576277e-07 0.9999994 2.801773 -0 -0.9999994 3.576277e-07 -16.27397 0 0 0 1 </matrix>
-    <node id="LayerFBXASC0580" name="LayerFBXASC0580">
-     <matrix>1 -0 0 -73.96291 0 1 3.576281e-07 -14.98226 -0 -3.576281e-07 1 -2.037307 0 0 0 1 </matrix>
+   <node id="TapPosition" name="TapPosition">
+    <matrix>1 -0 0 0 0 3.576276e-07 0.9999992 -0.5 -0 -0.9999992 3.576276e-07 0 0 0 0 1 </matrix>
+    <node id="LayerFBXASC0580" name="TubeSet">
+     <matrix>1 -0 0 -73.963 0 1 3.576282e-07 -14.98226 -0 -3.576282e-07 1 -0.9999998 0 0 0 1 </matrix>
      <instance_geometry url="#geometry1">
       <bind_material>
        <technique_common>
@@ -106,6 +106,15 @@
       </bind_material>
      </instance_geometry>
     </node>
+   </node>
+   <node id="jinggai" name="Cap1">
+    <matrix>1 -0 0 -113.0577 0 3.576274e-07 0.9999987 -3.508829 -0 -0.9999987 3.576274e-07 70.86156 0 0 0 1 </matrix>
+   </node>
+   <node id="Cap2" name="Cap2">
+    <matrix>1 -0 0 0 0 3.576276e-07 0.9999993 -0.5 -0 -0.9999993 3.576276e-07 0 0 0 0 1 </matrix>
+   </node>
+   <node id="Cap3" name="Cap3">
+    <matrix>1 -0 0 -18.02732 0 3.576275e-07 0.9999989 0.3697731 -0 -0.9999989 3.576275e-07 -7.107732 0 0 0 1 </matrix>
    </node>
   </visual_scene>
  </library_visual_scenes>
